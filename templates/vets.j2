@@ -1,0 +1,72 @@
+{%  extends "base.j2" %}
+{% block title %}Veterinarians{% endblock %}
+{% block content %}
+    <h1>VETERINARIANS</h1>
+         
+        <form action="" method="">
+            <fieldset>
+				<legend>Veterinarian Information:</legend>
+				
+                <label>First Name:</label>
+                    <input type="text" name="vet_first_name">
+				<br>
+                <label>Last Name:</label>
+					<input type="text" name="vet_last_name">
+				<label>Phone:</label>
+                    <input type="text" name="direct_phone" placeholder="555-555-5555">
+                <br> 
+				<label>Specialty:</label>
+                    <select  name="speciality">
+						<option>SELECT</option>
+						<option value="Cardiology">Cardiology</option>
+                        <option value="Critical Care">Critical Care</option>
+						<option value="Dermatology">Dermatology</option>
+						<option value="Diagnostic Imaging">Diagnostic Imaging</option>
+                        <option value="Internal Medicine">Internal Medicine</option>
+						<option value="Neurology">Neurology</option>
+						<option value="Oncology">Oncology</option>
+						<option value="Ophthalmology">Ophthalmology</option>
+						<option value="Orthopedics">Orthopedics</option>
+						<option value="Surgery">Surgery</option>   
+					</select>		
+				<label>Status:</label>
+                    <select  name="employment_status">
+						<option>SELECT</option>
+						<option value="staff">Staff</option>
+                        <option value="outside consultant">Outside Consultant</option>
+					</select>						
+                <label>E-mail:</label>
+                    <input type="text" name="vet_email">
+				<br>
+                <label>Clinic ID:</label>
+                    <input type="text" name="clinic_id">
+               <br>             
+            </fieldset>
+			<button class= "button" type="button" onclick="alert('This will (eventually) create a Vet entry')">Add Veterinarian</button>
+        </form>
+     
+		<h3>Veterinarians Table</h3>
+		<table>
+			<tr>
+				<th>id</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Phone</th>
+				<th>Specialty</th>
+				<th>Status</th>
+				<th>E-mail</th>
+				<th>Clinic ID</th>
+				<th colspan = 2 style= "text-align: center;">Action</th>
+			</tr>
+			{% for vet in vets %}
+				<tr>
+				{% for key in vet.keys() %}
+				<td>{{vet[key]}}</td>
+				{% endfor %}
+				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+				<td><button class= "del_button" type="button" onclick="alert('This will (eventually) allow deletion')">Delete</button></td>
+				</tr>
+			{% endfor %}
+        </table>
+
+{% endblock %}

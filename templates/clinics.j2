@@ -1,0 +1,108 @@
+{%  extends "base.j2" %}
+{% block title %}Clinics{% endblock %}
+{% block content %}
+
+	<h1>CLINICS</h1>
+         
+        <form action="" method="">
+            <fieldset>
+				<legend>Clinic Information:</legend>
+				
+                <label>Clinic Name:</label>
+                    <input type="text" name="clinic_name">
+				
+                <br>            
+                <label>Street Address:</label>
+                    <input type="text" name="clinic_street">
+				<br>
+                <label>City:</label>
+                    <input type="text" name="clinic_city">
+               <br>
+                <label>State:</label>
+                    <select id="city" name="clinic_state">
+						<option>SELECT</option>
+                        <option value="AL">ALABAMA</option>
+                        <option value="AK">ALASKA</option>
+                        <option value="AZ">ARIZONA</option>
+                        <option value="AR">ARKANSAS</option>
+                        <option value="CA">CALIFORNIA</option>
+                        <option value="CO">COLORADO</option>
+                        <option value="CT">CONNECTICUT</option>
+                        <option value="DE">DELEWARE</option>
+                        <option value="FL">FLORIDA</option>
+                        <option value="GA">GEORGIA</option>
+                        <option value="HW">HAWAII</option>
+                        <option value="ID">IDAHO</option>
+                        <option value="IL">ILLINIOS</option>
+                        <option value="IN">INDIANA</option>
+                        <option value="IA">IOWA</option>
+                        <option value="KS">KANSAS</option>
+                        <option value="KY">KENTUCKY</option>
+                        <option value="LA">LOUISIANA</option>
+                        <option value="ME">MAINE</option>
+                        <option value="MD">MARYLAND</option>
+                        <option value="MA">MASSACHUSETTS</option>
+                        <option value="MI">MICHIGAN</option>
+                        <option value="MN">MINNESOTA</option>
+                        <option value="MS">MISSISSIPPI</option>
+                        <option value="MO">MISSOURI</option>
+                        <option value="MT">MONTANA</option>
+                        <option value="NE">NEBRASKA</option>
+                        <option value="NV">NEVADA</option>
+                        <option value="NH">NEW HAMPSHIRE</option>
+                        <option value="NJ">NEW JERSEY</option>
+                        <option value="NM">NEW MEXICO</option>
+                        <option value="NY">NEW YORK</option>
+                        <option value="NC">NORTH CAROLINA</option>
+                        <option value="ND">NORTH DAKOTA</option>
+                        <option value="OH">OHIO</option>
+                        <option value="OK">OKLAHOMA</option>
+                        <option value="OR">OREGON</option>
+                        <option value="PA">PENNSYLVANIA</option>
+                        <option value="RI">RHODE ISLAND</option>
+                        <option value="SC">SOUTH CAROLINA</option>
+                        <option value="SD">SOUTH DAKOTA</option>
+                        <option value="TN">TENNESSEE</option>
+                        <option value="TX">TEXAS</option>
+                        <option value="UT">UTAH</option>
+                        <option value="VT">VERMONT</option>
+                        <option value="VA">VIRGINIA</option>
+                        <option value="WA">WASHINGTON</option>
+                        <option value="WV">WEST VIRGINIA</option>
+                        <option value="WI">WISCONSIN</option>
+                        <option value="WY">WYOMING</option>
+                  </select>
+                <label>Zip:</label>
+                    <input type="text" name="clinic_zip">
+				<br>
+                <label>Clinic Phone:</label>
+                    <input type="text" name="clinic_phone" placeholder="555-555-5555">
+            </fieldset>
+			<button class= "button" type="button" onclick="alert('This will (eventually) create Clinics entry')">Add Clinic</button>
+        </form>
+     
+		<h3>Clinics Table</h3>
+		<table>
+			<tr>
+				<th>id</th>
+				<th>Name</th>
+				<th>Street Address</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Zip</th>
+				<th>Phone</th>
+				<th style= "text-align: center;">Action</th>
+			</tr>
+        
+			{% for clinic in clinics %}
+				<tr>
+				{% for key in clinic.keys() %}
+				<td>{{clinic[key]}}</td>
+				{% endfor %}
+				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+				</tr>
+			{% endfor %}
+
+		</table>
+		
+{% endblock %}

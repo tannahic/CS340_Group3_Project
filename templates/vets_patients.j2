@@ -1,0 +1,28 @@
+{%  extends "base.j2" %}
+{% block title %}Veterinarians-Patients{% endblock %}
+{% block content %}
+     
+    <h2>Veterinarians-Patients Table</h2>
+         
+		<table>
+			<tr>
+				<th>Vet ID</th>
+				<th>Patient ID</th>
+	       
+			</tr>
+			
+			{% for v_p in veterinarians_patients %}
+			<tr>
+				{% for key in v_p.keys() %}
+				<td>{{v_p[key]}}</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
+			
+        </table>
+		
+        
+			<button class= "button" type="button" onclick="alert('This will create Vet-Patient relationship')">Add Relationship</button>
+			<button class= "del_relation" type="button" onclick="alert('This will delete Vet-Patient relationship')">Delete Relationship</button>
+
+{% endblock %}

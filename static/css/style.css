@@ -1,0 +1,123 @@
+body{
+    background: rgb(58,58,58);
+    color: white;
+    font-family: sans-serif;
+    font-size: 20px
+}
+
+#menu-nav{
+    list-style-type: none;
+	font-size: 15px;
+}
+
+/*
+ Change the styling of the links
+*/
+a:link{
+    color:white;
+	text-decoration: none;
+}
+a:visited{
+    color:white;
+}
+a:hover{
+    color:lightgreen;
+}
+a:active {
+    color: white;
+}
+
+#home-section{
+    color: green;
+}
+
+/*
+ Sytling for Navigation bar
+*/
+li {
+    padding: 20px;
+    display: inline-block;
+}
+
+div { 
+	max-width: 900px;
+	margin: auto;
+	
+	padding: 50px;
+}
+
+h1 {text-align: left
+}
+
+h3 {
+	padding-top: 40px;
+}
+
+dl dt { 
+	padding: 35px 100px 0px 0px;
+	font-size: 24px;
+	
+}
+
+label{
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 180px;
+    text-align: right;
+	padding: 20px 0px 0px 0px;
+}
+input, select {
+  display: inline-block;
+  float: left;
+  margin: 20px 0px 0px 5px;
+  padding: 5px 0px 0px 2px;
+  width: 30%;
+}
+
+.button {
+    padding: 10px 20px 10px 20px;
+    margin-top: 5px;
+    font-size: 1em;
+}
+.del_relation {
+    padding: 10px 20px 10px 20px;
+    margin-top: 5px;
+    font-size: 1em;
+	background-color:red;
+	color: white;
+}
+
+.del_button {
+	padding:5px;
+	background-color:red;
+	color: white;
+}
+
+.update_button {
+	padding:5px; 
+	display: block;
+	margin: auto;
+}
+	
+.filter_btn {
+	background-color: lightgreen;
+	padding: 10px 20px 10px 20px;
+    margin-top: 5px;
+    font-size: 1em;
+}	
+table {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+}
+	
+th { 
+	padding: 10px 20px;
+	font-size: 1em;
+}
+
+td, th {
+	padding: 5px;
+	border: 1px solid;
+}

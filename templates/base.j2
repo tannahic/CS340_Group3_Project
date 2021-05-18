@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+ <head>
+     {% block head %}
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1" >
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="icon" href="../static/images/favicon.png">
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css">
+     {%  endblock %}
+ </head>
+ <body>
+	<div id="page_content">
+		<header id="home-header">
+			<nav>
+				<ul id="menu-nav">
+					<li><a href="/">Home</a></li>
+					<li><a href="/clinics">Clinics</a></li>
+					<li><a href="/vets">Veterinarians</a></li>
+					<li><a href="/clients">Clients</a></li>
+					<li><a href="/patients">Patients</a></li>
+					<li><a href="/appointments">Appointments</a></li>
+					<li><a href="/vets_patients">Veterinarians-Patients</a></li>
+				</ul>
+			</nav>
+
+		</header>
+         {%  block content %} {%  endblock %}
+    </div>
+ </body>
+</html>

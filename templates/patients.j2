@@ -1,0 +1,68 @@
+{%  extends "base.j2" %}
+{% block title %}Patients{% endblock %}
+{% block content %}
+	     
+    <h1>PATIENTS</h1>
+         
+         <form action="" method="">
+            <fieldset>
+				<legend>Patient Information:</legend>
+				
+                <label>Name:</label>
+                    <input type="text" name="patient_name">
+				<br>
+				<label>Species:</label>
+                    <input type="text" name="species">
+				<br>
+                
+                <label>Breed:</label>
+                    <input type="text" name="breed">
+				<br>
+                <label>Color:</label>
+                    <input type="text" name="color">
+               <br>
+                <label>Sex:</label>
+                    <select  name="sex">
+						<option>SELECT</option>
+                        <option value="intact male">intact male</option>
+                        <option value="neutered male">neutered male</option>
+                        <option value="intact female">intact female</option>
+                        <option value="spayed female">spayed female</option>
+                        <option value="unknown">unknown</option>
+                        
+					</select>
+				 <br>            
+				 <label>Date of Birth:</label>
+                    <input type="date" name="date_of_birth" >
+				 <label>Client ID:</label>
+                    <input type="text" name="client_id">
+				    
+            </fieldset>
+			<button class= "button" type="button" onclick="alert('This will (eventually) create Patients entry')">Add Patient</button>
+			<button class= "filter_btn" type="button" onclick="alert('This will (eventually) allow Search/Filter of Patients')">Search/Filter</button>
+        </form>
+     
+		<h3>Patients Table</h3>
+		<table>
+          <tr>
+			<th>id</th>
+	        <th>Name</th>
+	        <th>Species</th>
+	        <th>Breed</th>
+			<th>Color</th>
+			<th>Sex</th>
+			<th>Date of Birth</th>
+			<th>Client ID</th>
+			<th style= "text-align: center;">Action</th>
+	      </tr>
+	      {% for patient in patients %}
+				<tr>
+				{% for key in patient.keys() %}
+				<td>{{patient[key]}}</td>
+				{% endfor %}
+				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+				</tr>
+			{% endfor %}
+        </table>
+
+{% endblock %}
