@@ -38,7 +38,11 @@ def insert():
         # key values are column names
         insert_query = insert_query + i + ', '
         # value strings are data to be inserted
-        values = values + '\'' + dict1[i] + '\', '
+        if dict1[i] == "":
+            dict1[i] = 'NULL'
+            values = values + dict1[i] + ', '
+        else:
+            values = values + '\'' + dict1[i] + '\', '
 
     # clean up strings and concatenate for final query
     insert_query = insert_query[:-2]
@@ -68,7 +72,7 @@ def clinics():
     return render_template("clinics.j2", clinics=result )
 
 # Veterinarians page
-@app.route('/vets')
+@app.route('/veterinarians')
 def vets():
     # Write query to retrieve all columns and save to a variable
     query = "SELECT  vet_id, vet_first_name, vet_last_name, direct_phone, specialty, employment_status, vet_email, clinic_id FROM veterinarians;"
@@ -124,7 +128,7 @@ def appointments():
     return render_template("appointments.j2", appointments=result)
 
 # Veterinarians-Patients page
-@app.route('/vets_patients')
+@app.route('/veterinarians_patients')
 def vets_patients():
     # Write query to retrieve all columns and save to a variable
     query = "SELECT * FROM veterinarians_patients;"
