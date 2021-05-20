@@ -67,7 +67,7 @@ def clinics():
 
     # return all results to display in table
     result = cursor.fetchall()
-
+    cursor.close()
     # Sends the results back to the web browser.
     return render_template("clinics.j2", clinics=result )
 
@@ -81,7 +81,7 @@ def vets():
 
     # return all results to display in table
     result = cursor.fetchall()
-
+    cursor.close()
     # Sends the results back to the web browser.
     return render_template("vets.j2", vets=result)
 
@@ -92,10 +92,10 @@ def clients():
     query = "SELECT * FROM clients;"
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
-
+    
     # return all results to display in table
     result = cursor.fetchall()
-
+    cursor.close()
     # Sends the results back to the web browser.
     return render_template("clients.j2", clients=result)
 
@@ -106,10 +106,10 @@ def patients():
     query = "SELECT patient_id, patient_name, species, breed, color, sex, date_of_birth, client_id FROM patients;"
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
-
+    
     # return all results to display in table
     result = cursor.fetchall()
-
+    cursor.close()
     # Sends the results back to the web browser.
     return render_template("patients.j2", patients=result)
 
@@ -120,10 +120,10 @@ def appointments():
     query = "SELECT * FROM appointments;"
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
-
+   
     # return all results to display in table
     result = cursor.fetchall()
-
+    cursor.close()
     # Sends the results back to the web browser.
     return render_template("appointments.j2", appointments=result)
 
@@ -137,7 +137,7 @@ def vets_patients():
 
     # return all results to display in table
     result = cursor.fetchall()
-
+    cursor.close()
     # Sends the results back to the web browser.
     return render_template("vets_patients.j2", veterinarians_patients=result)
 
