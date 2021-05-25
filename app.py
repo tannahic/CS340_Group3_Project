@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template, json
+from flask import Flask, render_template, json, request, redirect
 import os
 import database.db_connector as db
 
@@ -14,6 +14,48 @@ db_connection = db.connect_to_database()
 @app.route('/')
 def index():
     return render_template("index.j2")
+
+
+# form input POST route for db insertion
+@app.route('/insert', methods=['POST'])
+def insert():
+    # convert form data to dictionary
+    dict1 = request.form.to_dict()
+
+    # get first value from dictionary (which is db table name)
+    table = list(dict1.values())[0]
+    # begin constructing INSERT query in 2 pieces
+    insert_query = "INSERT INTO " + table + " ("
+    values = "VALUES ("
+
+    # get first dictionary key
+    table_key = list(dict1.keys())[0]
+    # use key to remove first dictionary entry
+    dict1.pop(table_key)
+
+    # use remaining dictionary entries to construct query
+    for i in dict1:
+        # key values are column names
+        insert_query = insert_query + i + ', '
+        # value strings are data to be inserted
+        if dict1[i] == "":
+            dict1[i] = 'NULL'
+            values = values + dict1[i] + ', '
+        else:
+            values = values + '\'' + dict1[i] + '\', '
+
+    # clean up strings and concatenate for final query
+    insert_query = insert_query[:-2]
+    insert_query = insert_query + ') '
+    values = values[:-2] + ');'
+    insert_query = insert_query + values + ';'
+
+    cursor = db.execute_query(db_connection=db_connection, query=insert_query)
+    db_connection.commit()
+    cursor.close()
+    page = '/' + table
+    return redirect(page)
+
 
 # Clinics page
 @app.route('/clinics')
@@ -30,7 +72,7 @@ def clinics():
     return render_template("clinics.j2", clinics=result )
 
 # Veterinarians page
-@app.route('/vets')
+@app.route('/veterinarians')
 def vets():
     # Write query to retrieve all columns and save to a variable
     query = "SELECT  vet_id, vet_first_name, vet_last_name, direct_phone, specialty, employment_status, vet_email, clinic_id FROM veterinarians;"
@@ -86,7 +128,7 @@ def appointments():
     return render_template("appointments.j2", appointments=result)
 
 # Veterinarians-Patients page
-@app.route('/vets_patients')
+@app.route('/veterinarians_patients')
 def vets_patients():
     # Write query to retrieve all columns and save to a variable
     query = "SELECT * FROM veterinarians_patients;"
@@ -102,8 +144,5 @@ def vets_patients():
 
 # Start app
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 1993))
-    #                                 ^^^^
-    #              You can replace this number with any valid port
-    
-    app.run(host='0.0.0.0', port=port, debug=False)
+    port = int(os.environ.get('PORT', 1994))
+    app.run(host='0.0.0.0', port=port, debug=True)

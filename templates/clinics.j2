@@ -4,23 +4,22 @@
 
 	<h1>CLINICS</h1>
          
-        <form action="" method="">
+    		<form action="insert" method="post">
             <fieldset>
 				<legend>Clinic Information:</legend>
-				
+				    <input type="hidden" name="table name"  value="clinics" required>
                 <label>Clinic Name:</label>
-                    <input type="text" name="clinic_name">
-				
-                <br>            
+                    <input type="text" name="clinic_name" required>
+				<br>
                 <label>Street Address:</label>
-                    <input type="text" name="clinic_street">
+                    <input type="text" name="clinic_street" required>
 				<br>
                 <label>City:</label>
-                    <input type="text" name="clinic_city">
+                    <input type="text" name="clinic_city" required>
                <br>
                 <label>State:</label>
-                    <select id="city" name="clinic_state">
-						<option>SELECT</option>
+                    <select id="city" name="clinic_state" required>
+						<option value="">SELECT</option>
                         <option value="AL">ALABAMA</option>
                         <option value="AK">ALASKA</option>
                         <option value="AZ">ARIZONA</option>
@@ -28,12 +27,12 @@
                         <option value="CA">CALIFORNIA</option>
                         <option value="CO">COLORADO</option>
                         <option value="CT">CONNECTICUT</option>
-                        <option value="DE">DELEWARE</option>
+                        <option value="DE">DELAWARE</option>
                         <option value="FL">FLORIDA</option>
                         <option value="GA">GEORGIA</option>
                         <option value="HW">HAWAII</option>
                         <option value="ID">IDAHO</option>
-                        <option value="IL">ILLINIOS</option>
+                        <option value="IL">ILLINOIS</option>
                         <option value="IN">INDIANA</option>
                         <option value="IA">IOWA</option>
                         <option value="KS">KANSAS</option>
@@ -73,14 +72,13 @@
                         <option value="WY">WYOMING</option>
                   </select>
                 <label>Zip:</label>
-                    <input type="text" name="clinic_zip">
-				<br>
+                    <input type="text" name="clinic_zip" pattern="[0-9]{5}" required>
+		<br>
                 <label>Clinic Phone:</label>
-                    <input type="text" name="clinic_phone" placeholder="555-555-5555">
+                    <input type="tel" name="clinic_phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </fieldset>
-			<button class= "button" type="button" onclick="alert('This will (eventually) create Clinics entry')">Add Clinic</button>
-        </form>
-     
+            <input class= "button" type="submit" value="Add Clinic"> 
+
 		<h3>Clinics Table</h3>
 		<table>
 			<tr>
