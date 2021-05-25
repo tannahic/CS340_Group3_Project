@@ -4,31 +4,32 @@
      
     <h1>APPOINTMENTS</h1>
          
-        <form action="" method="">
-			<fieldset>
-				<legend>Appointment Information:</legend>
-				<label>Patient ID:</label>
-                    <input type="text" name="patient_id">
-				<label>Vet ID:</label>
-                    <input type="text" name="vet_id">
-                <label>Appointment Type:</label>
-                    <select  name="appointment_type">
-						<option>SELECT</option>
-                        <option value="regular">Regular</option>
-                        <option value="consultation">Consultation</option>
-                    </select>
+        <form action="insert" method="post">
+		<fieldset>
+			<legend>Appointment Information:</legend>
+				<input type="hidden" name="table name"  value="appointments" required>
+			<label>Patient ID:</label>
+                    		<input type="number" name="patient_id" required>
+			<label>Vet ID:</label>
+                    		<input type="number" name="vet_id" required>
+                	<label>Appointment Type:</label>
+                    		<select  name="appointment_type" required>
+					<option value="">SELECT</option>
+                        		<option value="regular">Regular</option>
+                        		<option value="consultation">Consultation</option>
+                    		</select>
 				<br>
 		        <label>Date:</label>
-                    <input type="date" name="date_input">
-                <br>
-                <label>Start Time:</label>
-                    <input type="time" name="start_time">
-                <br>
-				<label>End Time:</label>
-                    <input type="time" name="end_time">
+                    		<input type="date" name="appointment_date" required>
+                	<br>
+                	<label>Start Time:</label>
+                    		<input type="time" name="start_time" required>
+                	<br>
+			<label>End Time:</label>
+                    		<input type="time" name="end_time" required>
 				
-            </fieldset>
-			<button class= "button" type="button" onclick="alert('This will (eventually) create an Appointment entry')">Add Appointment</button>
+            	</fieldset>
+		<input class= "button" type="submit" value="Add Appointment">
 			
         </form>
      
