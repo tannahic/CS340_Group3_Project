@@ -75,15 +75,18 @@ def clinics():
 @app.route('/veterinarians')
 def vets():
     # Write query to retrieve all columns and save to a variable
-    query = "SELECT  vet_id, vet_first_name, vet_last_name, direct_phone, specialty, employment_status, vet_email, clinic_id FROM veterinarians;"
+    query = "SELECT  vet_id, vet_first_name, vet_last_name, direct_phone, specialty, employment_status, vet_email, clinic_name FROM veterinarians LEFT JOIN clinics ON veterinarians.clinic_id=clinics.clinic_id;"
 
     cursor = db.execute_query(db_connection=db_connection, query=query)
-
     # return all results to display in table
     result = cursor.fetchall()
     cursor.close()
+    query2 = "SELECT clinic_id, clinic_name FROM clinics;"
+    cursor = db.execute_query(db_connection=db_connection, query=query2)
+    dropdown = cursor.fetchall()
+    cursor.close()
     # Sends the results back to the web browser.
-    return render_template("vets.j2", vets=result)
+    return render_template("vets.j2", vets=result, dropdown=dropdown )
 
 # Clients page
 @app.route('/clients')

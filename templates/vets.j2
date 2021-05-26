@@ -4,7 +4,7 @@
     <h1>VETERINARIANS</h1>
          
         <form action="insert" method="post">
-            <fieldset>
+            <fieldset style="position: relative;">
 		<legend>Veterinarian Information:</legend>
 		<input type="hidden" name="table name"  value="veterinarians" required>		
                 <label>First Name:</label>
@@ -38,13 +38,19 @@
                 <label>E-mail:</label>
                     <input type="email" name="vet_email" required>
 			<br>
-                <label>Clinic ID:</label>
-                    <input type="number" name="clinic_id" pattern="[0-9]*">
-               <br>             
+                <label>*Clinic:</label>
+                    <select name="clinic_id" >
+						<option value="">SELECT</option>
+						{% for entry in dropdown %}
+						<option value={{entry['clinic_id']}}>{{entry['clinic_id']}}  {{entry['clinic_name']}}</option>
+						{% endfor %}
+					</select>
+                    
+	    <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div>        
             </fieldset>
 		<input class= "button" type="submit" value="Add Veterinarian">
         </form>
-     
+    	<br> 
 		<h3>Veterinarians Table</h3>
 		<table>
 			<tr>
@@ -55,7 +61,7 @@
 				<th>Specialty</th>
 				<th>Status</th>
 				<th>E-mail</th>
-				<th>Clinic ID</th>
+				<th>Clinic</th>
 				<th colspan = 2 style= "text-align: center;">Action</th>
 			</tr>
 			{% for vet in vets %}
