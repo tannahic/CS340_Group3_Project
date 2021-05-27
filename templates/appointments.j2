@@ -8,10 +8,21 @@
 		<fieldset>
 			<legend>Appointment Information:</legend>
 				<input type="hidden" name="table name"  value="appointments" required>
-			<label>Patient ID:</label>
-                    		<input type="number" name="patient_id" required>
-			<label>Vet ID:</label>
-                    		<input type="number" name="vet_id" required>
+			<label>Patient:</label>
+			<select name="patient_id" required>
+				<option value="">SELECT</option>
+				{% for entry in dropdown1 %}
+				<option value={{entry['patient_id']}}>{{entry['patient_id']}}  {{entry['patient']}}</option>
+				{% endfor %}
+			</select>               
+			<label>Vet:</label>
+			<select name="vet_id" required>
+				<option value="">SELECT</option>
+				{% for entry in dropdown2 %}
+				<option value={{entry['vet_id']}}>{{entry['vet_id']}} Dr. {{entry['vet_last_name']}}</option>
+				{% endfor %}
+			</select>          
+                    		
                 	<label>Appointment Type:</label>
                     		<select  name="appointment_type" required>
 					<option value="">SELECT</option>
@@ -27,7 +38,7 @@
                 	<br>
 			<label>End Time:</label>
                     		<input type="time" name="end_time" required>
-				
+				<div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div> 
             	</fieldset>
 		<input class= "button" type="submit" value="Add Appointment">
 			
@@ -38,7 +49,9 @@
 			<tr>
 				<th>id</th>
 				<th>Patient ID</th>
+				<th>Patient</th>
 				<th>Vet ID</th>
+				<th>Veterinarian</th>
 				<th>Appointment Type</th>
 				<th>Date</th>
 				<th>Start Time</th>

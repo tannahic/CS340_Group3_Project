@@ -65,13 +65,13 @@ label{
     clear: left;
     width: 180px;
     text-align: right;
-	padding: 20px 0px 0px 0px;
+	padding: 20px 5px 0px 0px;
 }
 input, select {
   display: inline-block;
   float: left;
-  margin: 20px 0px 0px 5px;
-  padding: 5px 0px 0px 2px;
+  margin: 20px 0px 0px 0px;
+  padding: 5px 0px 0px 0px;
   width: 30%;
 }
 
@@ -103,9 +103,21 @@ input, select {
 .filter_btn {
 	background-color: lightgreen;
 	padding: 10px 20px 10px 20px;
-    margin-top: 5px;
-    font-size: 1em;
+    	margin: 5px 0px 15px 5px; 
+    	font-size: 1em;
+	
 }	
+
+.filter_btn:hover {
+	color: black;
+}
+.reset_btn {
+	padding: 10px 20px 10px 20px;
+    	margin: 5px 0px 0px 5px;
+    	font-size: 1em;
+	background: grey;
+}
+
 table {
 	width: 100%;
 	border-collapse: collapse;

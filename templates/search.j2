@@ -1,0 +1,74 @@
+{%  extends "base.j2" %}
+{% block title %}Patient Search{% endblock %}
+{% block content %}
+	     
+    <h1>PATIENTS</h1>
+         
+        <form action="search_result" method="post">
+            <fieldset style="position: relative; border-color: #90EE90">
+				<legend style="color: #90EE90;">Patient Search Form:</legend>
+					
+					<label>Patient ID</label>
+						<input type="number" name="patient_id">
+					<label>Name:</label>
+						<input type="text" name="patient_name">
+					<br>
+					<label>Species:</label>
+						<input type="text" name="species">
+					<br>
+					<label>Breed:</label>
+						<input type="text" name="breed">
+					<br>
+					<label>Color:</label>
+						<input type="text" name="color">
+                    <br>
+					<label>Sex:</label>
+						<select  name="sex">
+					<option value="">SELECT</option>
+                        <option value="intact male">intact male</option>
+                        <option value="neutered male">neutered male</option>
+                        <option value="intact female">intact female</option>
+                        <option value="spayed female">spayed female</option>
+                        <option value="unknown">unknown</option>
+               	    </select>
+					<br>            
+					<label>Date of Birth:</label>
+						<input type="date" name="date_of_birth" >
+					<label>Client:</label>
+						<select name="patients.client_id" >
+						<option value="">SELECT</option>
+						{% for entry in dropdown %}
+						<option value={{entry['client_id']}}>{{entry['client_id']}}  {{entry['client']}}</option>
+						{% endfor %}
+					</select>
+                    
+	    	      				    
+			</fieldset>
+	    
+	    <input class= "filter_btn" type="submit" value="Search"> 
+	<button class="reset_btn"><a href="/patients"  type="button">Reset Patients Table</a></button> 
+	</form>	
+	<h3>Patients Table</h3>
+		<table>
+          <tr>
+			<th>id</th>
+	        <th>Name</th>
+	        <th>Species</th>
+	        <th>Breed</th>
+			<th>Color</th>
+			<th>Sex</th>
+			<th>Date of Birth</th>
+			<th>Client</th>
+			
+	      </tr>
+	      {% for patient in patients %}
+				<tr>
+				{% for key in patient.keys() %}
+				<td>{{patient[key]}}</td>
+				{% endfor %}
+				
+				</tr>
+			{% endfor %}
+        </table>
+
+{% endblock %}

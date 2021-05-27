@@ -5,7 +5,7 @@
     <h1>PATIENTS</h1>
          
          <form action="insert" method="post">
-            <fieldset>
+            <fieldset style="position: relative;">
 		<legend>Patient Information:</legend>
 		<input type="hidden" name="table name"  value="patients" required>		
                 <label>Name:</label>
@@ -14,10 +14,10 @@
 		<label>Species:</label>
                     <input type="text" name="species" required>
 		    <br>
-                <label>Breed:</label>
-                    <input type="text" name="breed" required>
+                <label>*Breed:</label>
+                    <input type="text" name="breed">
 		    <br>
-                <label>Color:</label>
+                <label>*Color:</label>
                     <input type="text" name="color">
                     <br>
                 <label>Sex:</label>
@@ -30,14 +30,23 @@
                         <option value="unknown">unknown</option>
                	    </select>
 		    <br>            
-		<label>Date of Birth:</label>
+		<label>*Date of Birth:</label>
                     <input type="date" name="date_of_birth" >
-		<label>Client ID:</label>
-                    <input type="number" name="client_id" pattern="[0-9]*" required>
-				    
+		<label>Client:</label>
+			<select name="client_id" required>
+				<option value="">SELECT</option>
+				{% for entry in dropdown %}
+				<option value={{entry['client_id']}}>{{entry['client_id']}}  {{entry['client']}}</option>
+				{% endfor %}
+			</select>
+                    
+	    	<div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div> 
+        				    
             </fieldset>
+	    
 	    <input class= "button" type="submit" value="Add Patient">
-	    <button class= "filter_btn" type="button" onclick="alert('This will (eventually) allow Search/Filter of Patients')">Search/Filter</button>
+	    <button class="filter_btn"><a  href='/search' class= "filter_btn" type="button">Search/Filter</a></button>
+	   
         </form>
      
 		<h3>Patients Table</h3>
@@ -50,7 +59,7 @@
 			<th>Color</th>
 			<th>Sex</th>
 			<th>Date of Birth</th>
-			<th>Client ID</th>
+			<th>Client</th>
 			<th style= "text-align: center;">Action</th>
 	      </tr>
 	      {% for patient in patients %}
