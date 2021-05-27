@@ -40,7 +40,7 @@ li {
 }
 
 div { 
-	max-width: 900px;
+	max-width: 1000px;
 	margin: auto;
 	
 	padding: 50px;
@@ -50,7 +50,7 @@ h1 {text-align: left
 }
 
 h3 {
-	padding-top: 40px;
+	padding-top: 30px;
 }
 
 dl dt { 
@@ -65,13 +65,13 @@ label{
     clear: left;
     width: 180px;
     text-align: right;
-	padding: 20px 0px 0px 0px;
+	padding: 20px 5px 0px 0px;
 }
 input, select {
   display: inline-block;
   float: left;
-  margin: 20px 0px 0px 5px;
-  padding: 5px 0px 0px 2px;
+  margin: 20px 5px 0px 0px;
+  padding: 5px 0px 0px 0px;
   width: 30%;
 }
 
@@ -92,6 +92,8 @@ input, select {
 	padding:5px;
 	background-color:red;
 	color: white;
+	width: 100%;
+	margin-top: 5px;
 }
 
 .update_button {
@@ -103,9 +105,24 @@ input, select {
 .filter_btn {
 	background-color: lightgreen;
 	padding: 10px 20px 10px 20px;
-    margin-top: 5px;
-    font-size: 1em;
+    	margin: 5px 0px 0px 0px; 
+    	font-size: 1em;
 }	
+
+.filter_btn a:link {
+	color: black;
+}
+
+.filter_btn a:hover {
+	color: white;
+}
+.reset_btn {
+	padding: 10px 20px 10px 20px;
+    	margin: 5px 0px 0px 5px;
+    	font-size: 1em;
+	background: grey;
+}
+
 table {
 	width: 100%;
 	border-collapse: collapse;

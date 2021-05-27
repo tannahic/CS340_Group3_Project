@@ -5,7 +5,7 @@
     <h1>CLIENTS</h1>
          
          <form action="insert" method="post">
-            <fieldset>
+            <fieldset style="position:relative">
 		<legend>Client Information:</legend>
 			<input type="hidden" name="table name"  value="clients" required>		
                 <label>First Name:</label>
@@ -79,12 +79,13 @@
                     <input type="text" name="zip" pattern="[0-9]{5}" required>
 		<label>Phone:</label>
 		    <input type="tel" name="phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-		<label>E-mail:</label>
-		    <input type="email" name="email" required>
-                
+		<label>*E-mail:</label>
+		    <input type="email" name="email">
+               <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div> 
             </fieldset>
 	    <input class= "button" type="submit" value="Add Client">
         </form>
+	<br>
      
 		<h3>Clients Table</h3>
 		<table>
@@ -105,7 +106,11 @@
 				{% for key in client.keys() %}
 				<td>{{client[key]}}</td>
 				{% endfor %}
-				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+				<form action="update" method="post">
+				<input type="hidden" name="table" value="clients" required>
+				<input type="hidden" name="client_id"  value={{client['client_id']}} required>			
+				<td><input style="width:95%" class="update_button" type="submit" value="Update"></td>
+				</form>	
 				</tr>
 			{% endfor %}
         </table>
