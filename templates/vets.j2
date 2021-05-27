@@ -70,9 +70,12 @@
 				<td>{{vet[key]}}</td>
 				{% endfor %}
 				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
-				<td><button class= "del_button" type="button" onclick="alert('This will (eventually) allow deletion')">Delete</button></td>
+				<form action="delete" method="post">
+				<input type="hidden" name="vet_id"  value={{vet['vet_id']}} required>			
+				<td><input class="del_button" type="submit" value="Delete"></td>
+				</form>
 				</tr>
 			{% endfor %}
-        </table>
+        	</table>
 
 {% endblock %}

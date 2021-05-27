@@ -50,7 +50,7 @@ h1 {text-align: left
 }
 
 h3 {
-	padding-top: 40px;
+	padding-top: 30px;
 }
 
 dl dt { 
@@ -70,7 +70,7 @@ label{
 input, select {
   display: inline-block;
   float: left;
-  margin: 20px 0px 0px 0px;
+  margin: 20px 5px 0px 0px;
   padding: 5px 0px 0px 0px;
   width: 30%;
 }
@@ -92,6 +92,8 @@ input, select {
 	padding:5px;
 	background-color:red;
 	color: white;
+	width: 100%;
+	margin-top: 5px;
 }
 
 .update_button {
@@ -103,13 +105,16 @@ input, select {
 .filter_btn {
 	background-color: lightgreen;
 	padding: 10px 20px 10px 20px;
-    	margin: 5px 0px 15px 0px; 
+    	margin: 5px 0px 0px 0px; 
     	font-size: 1em;
-	
 }	
 
-.filter_btn:hover {
+.filter_btn a:link {
 	color: black;
+}
+
+.filter_btn a:hover {
+	color: white;
 }
 .reset_btn {
 	padding: 10px 20px 10px 20px;

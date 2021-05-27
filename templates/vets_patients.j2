@@ -7,7 +7,10 @@
 		<table>
 			<tr>
 				<th>Vet ID</th>
+				<th>Veterinarian</th>
 				<th>Patient ID</th>
+				<th>Patient</th>
+				<th>Action</th>
 	       
 			</tr>
 			
@@ -16,13 +19,54 @@
 				{% for key in v_p.keys() %}
 				<td>{{v_p[key]}}</td>
 				{% endfor %}
-			</tr>
+			<form action="delete_vp" method="post">
+				<input type="hidden" name="vet_id"  value={{ v_p['vet_id'] }}  required>
+				<input type="hidden" name="patient_id" value={{v_p['patient_id']}} required>			
+				<td><input class="del_button" style="width: 70%;" type="submit" value="Delete"></td>
+				</form>
+				</tr>
 			{% endfor %}
 			
         </table>
+
+	
 		
         
-			<button class= "button" type="button" onclick="alert('This will create Vet-Patient relationship')">Add Relationship</button>
-			<button class= "del_relation" type="button" onclick="alert('This will delete Vet-Patient relationship')">Delete Relationship</button>
-
+			<button class= "button" onclick="showForm()" type="button">Add Relationship</button>
+	<br><br>			
+		<form id="hiddenForm" style="display:none" action="insert" method="post">
+            <fieldset style="position: relative;">
+		<legend>Add Veterinarian-Patient Relationship:</legend>
+			<input type="hidden" name="table name"  value="veterinarians_patients" required>		
+            <label>Veterinarian:</label>
+				<select name="vet_id" required>
+				<option value="">SELECT</option>
+				{% for entry in dropdown1 %}
+				<option value={{entry['vet_id']}}>{{entry['vet_id']}} Dr. {{entry['vet_last_name']}}</option>
+				{% endfor %}
+				</select>          
+            <label>Patient:</label>
+				<select name="patient_id" required>
+				<option value="">SELECT</option>
+				{% for entry in dropdown2 %}
+				<option value={{entry['patient_id']}}>{{entry['patient_id']}}  {{entry['patient']}}</option>
+				{% endfor %}
+				</select>        
+                 
+       		</fieldset>	     
+		<input class= "button" type="submit" value="Add to Database">
+	
+        </form>
+		
+<script>
+function showForm() {
+var myForm = document.getElementById("hiddenForm");
+if (myForm.style.display === "none") {
+  myForm.style.display = "block";
+  } else {
+    myForm.style.display = "none";
+  }
+}
+</script>
+	
 {% endblock %}
