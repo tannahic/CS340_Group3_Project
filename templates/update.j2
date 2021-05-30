@@ -1,0 +1,75 @@
+{%  extends "base.j2" %}
+{% block title %}Clients-Update{% endblock %}
+{% block content %}
+
+    <h1>CLIENTS</h1>
+        {% for client in form_data %}
+         <form action="update_result" method="post">
+            <fieldset style="position: relative; border-color: #90EE90;">
+		    <legend style="color: #90EE90;">Client Update:</legend>
+            <input type="hidden" name="table"  value="clients" required>
+			<input type="hidden" name="client_id"  value={{client['client_id']}} required>		
+                <label>First Name:</label>
+                    <input type="text" name="first_name" required value={{client['first_name']}}>
+                <br>
+		        <label>Last Name:</label>
+                    <input type="text" name="last_name" required value={{client['last_name']}}>
+		        <br>
+                <label>Street Address:</label>
+                    <input type="text" name="street" required value="{{client['street']}}">
+		        <br>
+                <label>City:</label>
+                    <input type="text" name="city" required value={{client['city']}}>
+               <br>
+                <label>State:</label>
+                    <select id="state" name="state" required >
+			            <option value="">SELECT</option>
+                        {%  for state in states %}
+                            {% if  state  == client['state']  %}
+                                <option value={{ state }} selected>{{ states[state] }}</option>
+                            {% else %}
+                                <option value="{{ state }}" >{{ states[state] }}</option>
+                            {% endif %}
+                        {% endfor %}
+		            </select>
+                <br>
+		        <label>Zip:</label>
+                    <input type="text" name="zip" value={{client['zip']}} pattern="[0-9]{5}" required>
+		        <label>Phone:</label>
+		            <input type="tel" name="phone" value={{client['phone']}} pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+		        <label>*E-mail:</label>
+		            <input type="email" name="email" value={{client['email']}}>
+                <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div>
+            </fieldset>
+	        <input class= "button" type="submit" value="Update Client">
+        </form>
+        {% endfor %}
+        <br>
+		<h3>Clients Table</h3>
+		<table>
+            <tr>
+			    <th>id</th>
+	            <th>First Name</th>
+	            <th>Last Name</th>
+	            <th>Street Address</th>
+			    <th>City</th>
+			    <th>State</th>
+			    <th>Zip</th>
+			    <th>Phone</th>
+			    <th>E-mail</th>
+			    <th  style= "text-align: center;">Action</th>
+	        </tr>
+	        {% for client in clients %}
+			<tr>
+				{% for key in client.keys() %}
+				<td>{{client[key]}}</td>
+				{% endfor %}
+				<form action="update" method="post">
+				<input type="hidden" name="client_id"  value={{client['client_id']}} required>			
+				<td><input class="update_button" type="submit" value="Update"></td>
+				</form>
+				</tr>
+            {% endfor %}
+        </table>
+
+{% endblock %}

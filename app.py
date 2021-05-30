@@ -1,6 +1,5 @@
 
-from flask import Flask, render_template, json, request, redirect
-import os
+from flask import Flask, render_template, request, redirect
 import CS340_Group3_Project.database.db_connector as db
 from CS340_Group3_Project.support import *
 
@@ -9,7 +8,7 @@ app = Flask(__name__)
 db_connection = db.connect_to_database()
 
 
-# routes to pages
+# Routes to pages and functions
 # home page
 @app.route('/')
 def index():
@@ -18,22 +17,48 @@ def index():
 
 @app.route('/update', methods=['POST'])
 def update_page():
-    # convert form data to dictionary
     dict1 = request.form.to_dict()
-    print(dict1)
     table = dict1['table']
-    print(table)
     id_value = dict1[list(dict1)[1]]
-    print(id_value)
-    my_id = table[:-1] + '_id'
-    print(my_id)
-    formfill_query = "SELECT * FROM "  + table +  " WHERE " + my_id + " = " + id_value + ";"
-    print(formfill_query)
+    id_name = table[:-1] + '_id'
+    formfill_query = "SELECT * FROM " + table + " WHERE " + id_name + " = " + id_value + ";"
     cursor = db.execute_query(db_connection=db_connection, query=formfill_query)
     result = cursor.fetchall()
     cursor.close()
     page = '/' + table
-    return render_template("update.j2", clients=result )
+    return render_template("update.j2", form_data=result, states=state_dict)
+
+
+@app.route('/update_result', methods=['POST'])
+def update_submit():
+    dict1 = request.form.to_dict()
+    table = list(dict1.values())[0]
+    # get first dictionary key
+    table_key = list(dict1.keys())[0]
+    # use key to remove first dictionary entry
+    dict1.pop(table_key)
+    id_key = list(dict1.keys())[0]
+    id_value = list(dict1.values())[0]
+    dict1.pop(id_key)
+
+    update_query = "UPDATE " + table + ' SET '
+    # use remaining dictionary entries to construct query
+    for i in dict1:
+        update_query = update_query + i + ' = '
+        # value strings are data to be inserted
+        if dict1[i] == "":
+            dict1[i] = 'NULL'
+            update_query = update_query + dict1[i] + ', '
+        else:
+            update_query = update_query + '\'' + dict1[i] + '\', '
+
+    update_query = update_query[:-2] + ' WHERE ' + id_key + ' = \'' + id_value + '\';'
+    print(update_query)
+    cursor = db.execute_query(db_connection=db_connection, query=update_query)
+    db_connection.commit()
+    cursor.close()
+    page = '/' + table
+    return redirect(page)
 
 
 # delete button input post route for veterinarian deletion
