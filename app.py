@@ -1,13 +1,12 @@
 
 from flask import Flask, render_template, json, request, redirect
 import os
-import database.db_connector as db
-from support import *
+import CS340_Group3_Project.database.db_connector as db
+from CS340_Group3_Project.support import *
 
 app = Flask(__name__)
 
 db_connection = db.connect_to_database()
-
 
 
 # routes to pages
@@ -19,7 +18,7 @@ def index():
 
 @app.route('/update', methods=['POST'])
 def update_page():
-   # convert form data to dictionary
+    # convert form data to dictionary
     dict1 = request.form.to_dict()
     print(dict1)
     table = dict1['table']
@@ -35,6 +34,7 @@ def update_page():
     cursor.close()
     page = '/' + table
     return render_template("update.j2", clients=result )
+
 
 # delete button input post route for veterinarian deletion
 @app.route('/delete', methods=['POST'])
@@ -63,10 +63,11 @@ def delete_vp():
     page = '/veterinarians_patients'
     return redirect(page)
 
+
 # form input POST route for db insertion
 @app.route('/insert', methods=['POST'])
 def insert():
-    # convert form data to dictionary
+
     dict1 = request.form.to_dict()
 
     # get first value from dictionary (which is db table name)
@@ -106,8 +107,10 @@ def insert():
 
 @app.route('/search')
 def search_page():
-    # Write query to retrieve all columns and save to a variable
-    query = "SELECT patient_id, patient_name, species, breed, color, sex, date_of_birth, CONCAT_WS(' ', first_name, last_name) AS client from patients LEFT JOIN clients ON patients.client_id=clients.client_id;"
+    # Write query to retrieve all columns
+    query = "SELECT patient_id, patient_name, species, breed, color, sex, date_of_birth," \
+            " CONCAT_WS(' ', first_name, last_name) AS client from patients LEFT JOIN clients" \
+            " ON patients.client_id=clients.client_id;"
     cursor = db.execute_query(db_connection=db_connection, query=query)
     
     # return all results to display in table
@@ -143,9 +146,8 @@ def search_result():
     cursor = db.execute_query(db_connection=db_connection, query=search_query)
     result = cursor.fetchall()
     cursor.close()
-	
+
     dropdown = get_client_dropdown()
-	
     return render_template("search.j2", patients=result, dropdown=dropdown)
 
 
@@ -246,5 +248,6 @@ def vets_patients():
 
 # Start app
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 1994))
-    app.run(host='0.0.0.0', port=port, debug=True)
+    # port = int(os.environ.get('PORT', 1994))
+    app.run()
+    # (host='0.0.0.0', port=port, debug=True)
