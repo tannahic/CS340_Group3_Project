@@ -107,8 +107,9 @@
 				<td>{{client[key]}}</td>
 				{% endfor %}
 				<form action="update" method="post">
+                    {% set var = client['client_id'] %}
 				<input type="hidden" name="table" value="clients" required>
-				<input type="hidden" name="client_id"  value={{client['client_id']}} required>			
+				<input type="hidden" name="client_id"  value={{ var }} required>
 				<td><input style="width:95%" class="update_button" type="submit" value="Update"></td>
 				</form>	
 				</tr>

@@ -1,7 +1,6 @@
-
 from flask import Flask, render_template, request, redirect
-import CS340_Group3_Project.database.db_connector as db
-from CS340_Group3_Project.support import *
+import database.db_connector as db
+from support import *
 
 app = Flask(__name__)
 
@@ -37,26 +36,7 @@ def update_submit():
     table_key = list(dict1.keys())[0]
     # use key to remove first dictionary entry
     dict1.pop(table_key)
-    id_key = list(dict1.keys())[0]
-    id_value = list(dict1.values())[0]
-    dict1.pop(id_key)
-
-    update_query = "UPDATE " + table + ' SET '
-    # use remaining dictionary entries to construct query
-    for i in dict1:
-        update_query = update_query + i + ' = '
-        # value strings are data to be inserted
-        if dict1[i] == "":
-            dict1[i] = 'NULL'
-            update_query = update_query + dict1[i] + ', '
-        else:
-            update_query = update_query + '\'' + dict1[i] + '\', '
-
-    update_query = update_query[:-2] + ' WHERE ' + id_key + ' = \'' + id_value + '\';'
-    print(update_query)
-    cursor = db.execute_query(db_connection=db_connection, query=update_query)
-    db_connection.commit()
-    cursor.close()
+    generate_update_query(table, dict1)
     page = '/' + table
     return redirect(page)
 
@@ -80,7 +60,8 @@ def delete():
 def delete_vp():
     # convert form data to dictionary
     dict1 = request.form.to_dict()
-    delete_query = "DELETE FROM veterinarians_patients WHERE vet_id = " + '\'' + dict1['vet_id'] + '\' AND patient_id = '+ '\'' + dict1['patient_id'] + '\';'
+    delete_query = "DELETE FROM veterinarians_patients WHERE vet_id = " + '\'' + dict1['vet_id'] +\
+                   '\' AND patient_id = '+ '\'' + dict1['patient_id'] + '\';'
     print(delete_query)
     cursor = db.execute_query(db_connection=db_connection, query=delete_query)
     db_connection.commit()
@@ -124,7 +105,7 @@ def insert():
     insert_query = insert_query + values + ';'
 
     cursor = db.execute_query(db_connection=db_connection, query=insert_query)
-    db_connection.commit()
+
     cursor.close()
     page = '/' + table
     return redirect(page)
@@ -155,7 +136,9 @@ def search_result():
     dict1 = request.form.to_dict()
     parameter = 0
     # build search query
-    search_query = "SELECT patient_id, patient_name, species, breed, color, sex, date_of_birth, CONCAT_WS(' ', first_name, last_name) AS client from patients LEFT JOIN clients ON patients.client_id=clients.client_id WHERE "
+    search_query = "SELECT patient_id, patient_name, species, breed, color, sex, date_of_birth," \
+                   " CONCAT_WS(' ', first_name, last_name) AS client from patients LEFT JOIN clients" \
+                   " ON patients.client_id=clients.client_id WHERE "
     # add data from dict1 to search query
     for i in dict1:
         
@@ -179,16 +162,15 @@ def search_result():
 # Clinics page
 @app.route('/clinics')
 def clinics():
-    # Write query to retrieve all columns and save to a variable
+    # query to retrieve all columns from clinics table
     query = "SELECT * FROM clinics;"
-
     cursor = db.execute_query(db_connection=db_connection, query=query)
-
-    # return all results to display in table
-    result = cursor.fetchall()
+    # retrieve all results to display in table
+    clinics_data = cursor.fetchall()
     cursor.close()
-    # Sends the results back to the web browser.
-    return render_template("clinics.j2", clinics=result )
+    # Send the data to the web browser.
+    return render_template("clinics.j2", clinics=clinics_data)
+
 
 # Veterinarians page
 @app.route('/veterinarians')
@@ -206,6 +188,7 @@ def vets():
     cursor.close()
     # Sends the results back to the web browser.
     return render_template("vets.j2", vets=result, dropdown=dropdown )
+
 
 # Clients page
 @app.route('/clients')
@@ -241,30 +224,24 @@ def patients():
 # Appointments page
 @app.route('/appointments')
 def appointments():
-    # Write query to retrieve all columns and save to a variable
-    query = "SELECT appointment_id, appointments.patient_id, CONCAT_WS(' ', patient_name, last_name) AS patient, appointments.vet_id, vet_last_name, appointment_type, appointment_date, start_time, end_time FROM appointments LEFT JOIN patients ON appointments.patient_id=patients.patient_id LEFT JOIN clients ON patients.client_id=clients.client_id LEFT JOIN veterinarians ON appointments.vet_id=veterinarians.vet_id;"
-
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-   
-    # return all results to display in table
-    result = cursor.fetchall()
-    cursor.close()
+    appointment_result = generate_appointments_table()
     patient_list = get_patient_dropdown()
     vet_list = get_vet_dropdown()
     # Sends the results back to the web browser.
-    return render_template("appointments.j2", appointments=result, dropdown1=patient_list, dropdown2=vet_list)
+    return render_template("appointments.j2", appointments=appointment_result,
+                           dropdown1=patient_list, dropdown2=vet_list)
 
 # Veterinarians-Patients page
 @app.route('/veterinarians_patients')
 def vets_patients():
+
     # Write query to retrieve all columns and save to a variable
     query = "SELECT veterinarians_patients.vet_id, CONCAT('Dr. ', vet_last_name) as Veterinarian, veterinarians_patients.patient_id, CONCAT_WS(' ', patient_name, last_name) from veterinarians_patients LEFT JOIN veterinarians ON veterinarians_patients.vet_id = veterinarians.vet_id LEFT JOIN patients ON veterinarians_patients.patient_id = patients.patient_id LEFT JOIN clients on patients.client_id = clients.client_id;"
-
     cursor = db.execute_query(db_connection=db_connection, query=query)
-
     # return all results to display in table
     result = cursor.fetchall()
     cursor.close()
+
     vet_list = get_vet_dropdown()
     patient_list = get_patient_dropdown()
     # Sends the results back to the web browser.
