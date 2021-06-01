@@ -3,7 +3,9 @@
 {% block content %}
      
     <h2>Veterinarians-Patients Table</h2>
-         
+          {% if error %}
+              <p id="error_alert">Note: {{ error }} </p>
+            {% endif %}
 		<table>
 			<tr>
 				<th>Vet ID</th>
@@ -57,7 +59,8 @@
 		<input class= "button" type="submit" value="Add to Database">
 	
         </form>
-		
+
+<script>window.setTimeout("document.getElementById('error_alert').style.display='none';", 3000);</script>
 <script>
 function showForm() {
 var myForm = document.getElementById("hiddenForm");

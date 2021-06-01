@@ -81,7 +81,8 @@ def update_page():
     cursor = db.execute_query(db_connection=db_connection, query=formfill_query)
     result = cursor.fetchall()
     cursor.close()
-    return render_template("update.j2", form_data=result, states=state_dict)
+    client_data = get_clients_table()
+    return render_template("update.j2", form_data=result, clients=client_data, states=state_dict)
 
 
 @app.route('/update_result', methods=['POST'])
@@ -97,12 +98,12 @@ def update_submit():
     return redirect(page)
 
 
-# delete button input post route for veterinarian deletion
+# delete post route for veterinarian deletion
 @app.route('/delete', methods=['POST'])
 def delete():
     # convert form data to dictionary
     dict1 = request.form.to_dict()
-    if vet_in_relation(dict1['vet_id']):
+    if is_vet_in_relation(dict1['vet_id']):
         error = "Veterinarians associated with Appointments or Veterinarians_Patients cannot be deleted."
         vet_data = get_veterinarians_table()
         dropdown = get_clinic_dropdown()
@@ -136,39 +137,24 @@ def delete_vp():
 @app.route('/insert', methods=['POST'])
 def insert():
     dict1 = request.form.to_dict()
-
     # get first value from dictionary (which is db table name)
     table = list(dict1.values())[0]
-    # begin constructing INSERT query in 2 pieces
-    insert_query = "INSERT INTO " + table + " ("
-    values = "VALUES ("
-
     # get first dictionary key
     table_key = list(dict1.keys())[0]
     # use key to remove first dictionary entry
     dict1.pop(table_key)
-
-    # use remaining dictionary entries to construct query
-    for i in dict1:
-        # key values are column names
-        insert_query = insert_query + i + ', '
-        # value strings are data to be inserted
-        if dict1[i] == "":
-            dict1[i] = 'NULL'
-            values = values + dict1[i] + ', '
-        else:
-            values = values + '\'' + dict1[i] + '\', '
-
-    # clean up strings and concatenate for final query
-    insert_query = insert_query[:-2]
-    insert_query = insert_query + ') '
-    values = values[:-2] + ');'
-    insert_query = insert_query + values + ';'
-    print(insert_query)
-    cursor = db.execute_query(db_connection=db_connection, query=insert_query)
-
-    cursor.close()
     page = '/' + table
+    if table == "veterinarians_patients" and vet_patient_exists(dict1['vet_id'], dict1['patient_id']):
+        error = "That relationship already exists. Only unique relationships can be added."
+        vp_table = get_vets_patients_table()
+        vet_list = get_vet_dropdown()
+        patient_list = get_patient_dropdown()
+        # Send data to browser via template.
+        return render_template("vets_patients.j2", veterinarians_patients=vp_table, dropdown1=vet_list,
+                               dropdown2=patient_list, error=error)
+    else:
+        generate_insert_query(table, dict1)
+
     return redirect(page)
 
 

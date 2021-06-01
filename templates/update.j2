@@ -41,7 +41,7 @@
 		            <input type="email" name="email" value={{client['email']}}>
                 <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div>
             </fieldset>
-	        <input class= "button" type="submit" value="Update Client">
+	        <input class= "filter_btn" type="submit" value="Update Client">
         </form>
         {% endfor %}
         <br>
@@ -65,8 +65,10 @@
 				<td>{{client[key]}}</td>
 				{% endfor %}
 				<form action="update" method="post">
-				<input type="hidden" name="client_id"  value={{client['client_id']}} required>			
-				<td><input class="update_button" type="submit" value="Update"></td>
+				{% set var = client['client_id'] %}
+				<input type="hidden" name="table" value="clients" required>
+				<input type="hidden" name="client_id"  value={{ var }} required>
+				<td><input style="width:95%" class="update_button" type="submit" value="Update"></td>
 				</form>
 				</tr>
             {% endfor %}

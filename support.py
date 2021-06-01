@@ -150,17 +150,43 @@ def generate_update_query(table, dict_in):
     db_connection.commit()
     cursor.close()
 
+def generate_insert_query(table_in, dict_in):
+    # begin constructing INSERT query in 2 pieces
+    insert_query = "INSERT INTO " + table_in + " ("
+    values = "VALUES ("
+    # use remaining dictionary entries to construct query
+    for i in dict_in:
+        # key values are column names
+        insert_query = insert_query + i + ', '
+        # value strings are data to be inserted
+        if dict_in[i] == "":
+            dict_in[i] = 'NULL'
+            values = values + dict_in[i] + ', '
+        else:
+            values = values + '\'' + dict_in[i] + '\', '
 
-def vet_in_relation(vet_id):
+    # clean up strings and concatenate for final query
+    insert_query = insert_query[:-2]
+    insert_query = insert_query + ') '
+    values = values[:-2] + ');'
+    insert_query = insert_query + values + ';'
+    cursor = db.execute_query(db_connection=db_connection, query=insert_query)
+    cursor.close()
+
+def is_vet_in_relation(vet_id):
     data = (vet_id, vet_id)
     query = ("SELECT a.vet_id, vp.vet_id FROM appointments a JOIN veterinarians_patients vp"
              " WHERE a.vet_id= %s OR vp.vet_id = %s;" % data)
-
     cursor = db.execute_query(db_connection=db_connection, query=query)
     result = cursor.rowcount
-    print(result)
     cursor.close
     return result
 
-
+def vet_patient_exists(vet_id, patient_id):
+    data = (vet_id, patient_id)
+    query = ("SELECT * FROM veterinarians_patients vp  WHERE vp.vet_id = %s AND vp.patient_id = %s;" % data)
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    result = cursor.rowcount
+    cursor.close
+    return result
 

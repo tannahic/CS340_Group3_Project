@@ -84,13 +84,13 @@ input, select {
     padding: 10px 20px 10px 20px;
     margin-top: 5px;
     font-size: 1em;
-	background-color:red;
+	background-color:#dd3636;
 	color: white;
 }
 
 .del_button {
 	padding:5px;
-	background-color:red;
+	background-color: #dd3636;
 	color: white;
 	width: 100%;
 	margin-top: 5px;
@@ -141,8 +141,9 @@ td, th {
 
 #error_alert {
 	padding: 10px;
-	border: solid red;
-	color: red;
+	border: solid #dd3636;
+	color: white;
 	font-style: italic ;
+	background-color: #dd3636;
 
 }
