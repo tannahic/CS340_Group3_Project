@@ -138,3 +138,11 @@ td, th {
 	padding: 5px;
 	border: 1px solid;
 }
+
+#error_alert {
+	padding: 10px;
+	border: solid red;
+	color: red;
+	font-style: italic ;
+
+}

@@ -15,6 +15,77 @@ state_dict = {
     'WA': 'Washington', 'WI': 'Wisconsin', 'WV': 'West Virginia', 'WY': 'Wyoming'
 }
 
+def get_clinics_table():
+    # query to retrieve all columns from clinics table
+    select_query = "SELECT * FROM clinics;"
+    cursor = db.execute_query(db_connection=db_connection, query=select_query)
+    # retrieve all results to display in table
+    clinics_table = cursor.fetchall()
+    cursor.close()
+    return clinics_table
+
+
+def get_veterinarians_table():
+    # Write query to retrieve all columns and save to a variable
+    query = "SELECT  vet_id, vet_first_name, vet_last_name, direct_phone, specialty, employment_status, vet_email," \
+            " clinic_name FROM veterinarians LEFT JOIN clinics ON veterinarians.clinic_id=clinics.clinic_id;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    vets_table = cursor.fetchall()
+    cursor.close()
+    return vets_table
+
+
+def get_clients_table():
+    # query to retrieve all columns from clients table
+    select_query = "SELECT * FROM clients;"
+    cursor = db.execute_query(db_connection=db_connection, query=select_query)
+    # return all results to display in table
+    clients_table = cursor.fetchall()
+    cursor.close()
+    return clients_table
+
+
+def get_patients_table():
+    # s
+    query = "SELECT patient_id, patient_name, species, breed, color, sex, date_of_birth," \
+            " CONCAT_WS(' ', first_name, last_name) AS client from patients LEFT JOIN clients" \
+            " ON patients.client_id=clients.client_id;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    # return all results to display in table
+    patient_table = cursor.fetchall()
+    cursor.close()
+    return patient_table
+
+
+def get_appointments_table():
+    # Write query to retrieve all columns and save to a variable
+    query = "SELECT appointment_id, appointments.patient_id, CONCAT_WS(' ', patient_name, last_name)" \
+            " AS patient, appointments.vet_id, vet_last_name, appointment_type, appointment_date," \
+            " start_time, end_time FROM appointments LEFT JOIN patients ON" \
+            " appointments.patient_id=patients.patient_id LEFT JOIN clients ON" \
+            " patients.client_id=clients.client_id LEFT JOIN veterinarians ON" \
+            " appointments.vet_id=veterinarians.vet_id;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    appointment_table = cursor.fetchall()
+    cursor.close()
+    return appointment_table
+
+
+def get_vets_patients_table():
+    # Write query to retrieve all columns and save to a variable
+    query = "SELECT veterinarians_patients.vet_id, CONCAT('Dr. ', vet_last_name) as Veterinarian," \
+            " veterinarians_patients.patient_id, CONCAT_WS(' ', patient_name, last_name)" \
+            " FROM veterinarians_patients" \
+            " LEFT JOIN veterinarians" \
+            " ON veterinarians_patients.vet_id = veterinarians.vet_id" \
+            " LEFT JOIN patients" \
+            " ON veterinarians_patients.patient_id = patients.patient_id " \
+            "LEFT JOIN clients ON patients.client_id = clients.client_id;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    vp_table = cursor.fetchall()
+    cursor.close()
+    return vp_table
+
 
 def get_client_dropdown():
     # query to return list of clients ids and names
@@ -59,25 +130,11 @@ def get_vet_dropdown():
     return vet_dropdown
 
 
-def generate_appointments_table():
-    # Write query to retrieve all columns and save to a variable
-    query = "SELECT appointment_id, appointments.patient_id, CONCAT_WS(' ', patient_name, last_name)" \
-            " AS patient, appointments.vet_id, vet_last_name, appointment_type, appointment_date," \
-            " start_time, end_time FROM appointments LEFT JOIN patients ON" \
-            " appointments.patient_id=patients.patient_id LEFT JOIN clients ON" \
-            " patients.client_id=clients.client_id LEFT JOIN veterinarians ON" \
-            " appointments.vet_id=veterinarians.vet_id;"
-    cursor = db.execute_query(db_connection=db_connection, query=query)
-    appointment_table = cursor.fetchall()
-    cursor.close()
-    return appointment_table
-
-
 def generate_update_query(table, dict_in):
     id_key = list(dict_in.keys())[0]
     id_value = list(dict_in.values())[0]
     dict_in.pop(id_key)
-    update_query = "UPDATE " + table + ' SET '
+    update_query = "UPDATE " + table + " SET "
     for i in dict_in:
         update_query = update_query + i + ' = '
 
@@ -87,11 +144,23 @@ def generate_update_query(table, dict_in):
         else:
             update_query = update_query + '\'' + dict_in[i] + '\', '
 
-    update_query = update_query[:-2] + ' WHERE ' + id_key + ' = \'' + id_value + '\';'
-    commit_to_database(update_query)
-
-
-def commit_to_database(query):
-    cursor = db.execute_query(db_connection=db_connection, query=query)
+    data = (id_key, id_value)
+    update_query = update_query[:-2] + (" WHERE %s = %s;" % data)
+    cursor = db.execute_query(db_connection=db_connection, query=update_query)
     db_connection.commit()
     cursor.close()
+
+
+def vet_in_relation(vet_id):
+    data = (vet_id, vet_id)
+    query = ("SELECT a.vet_id, vp.vet_id FROM appointments a JOIN veterinarians_patients vp"
+             " WHERE a.vet_id= %s OR vp.vet_id = %s;" % data)
+
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    result = cursor.rowcount
+    print(result)
+    cursor.close
+    return result
+
+
+
