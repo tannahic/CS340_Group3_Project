@@ -3,7 +3,6 @@ import database.db_connector as db
 from support import *
 
 app = Flask(__name__)
-app.secret_key = b'jkheuud92nDSAIN*^lq'
 
 db_connection = db.connect_to_database()
 
@@ -103,18 +102,20 @@ def update_submit():
 def delete():
     # convert form data to dictionary
     dict1 = request.form.to_dict()
-    if vet_is_foreign_key(dict1['vet_id']):
+    entity_id = 'vet_id' if dict1['table'] == 'veterinarians' else 'clinic_id'
+    if dict1['table'] == 'veterinarians' and vet_is_foreign_key(dict1['id']):
         error = "Veterinarians associated with Appointments or Veterinarians_Patients cannot be deleted."
         vet_data = get_veterinarians_table()
         dropdown = get_clinic_dropdown()
         return render_template('vets.j2', vets=vet_data, dropdown=dropdown, error=error)
 
     else:
-        delete_query = ("DELETE FROM veterinarians WHERE vet_id =  %s ;" % dict1['vet_id'])
+        query_data = (dict1['table'], entity_id,  dict1['id'])
+        delete_query = ("DELETE FROM %s WHERE %s =  %s ;" % query_data)
         print(delete_query)
         cursor = db.execute_query(db_connection=db_connection, query=delete_query)
         cursor.close()
-        page = '/veterinarians'
+        page = '/' + dict1['table']
         return redirect(page)
 
 
@@ -191,7 +192,7 @@ def search_result():
     result = cursor.fetchall()
     cursor.close()
     dropdown = get_client_dropdown()
-    return render_template("search.j2", patients=result, dropdown=dropdown)
+    return render_template("search.j2", patients=result, dropdown=dropdown, id='FocusOnSearchResult()')
 
 
 # Start app

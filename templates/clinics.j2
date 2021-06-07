@@ -43,7 +43,7 @@
 				<th>State</th>
 				<th>Zip</th>
 				<th>Phone</th>
-				<th style= "text-align: center;">Action</th>
+				<th colspan = 2 style= "text-align: center;">Action</th>
 			</tr>
         
 			{% for clinic in clinics %}
@@ -52,6 +52,11 @@
 				<td>{{clinic[key]}}</td>
 				{% endfor %}
 				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+                <form action="delete" method="post">
+                    <input type="hidden" name="table"  value="clinics" required>
+				    <input type="hidden" name="id"  value={{clinic['clinic_id']}} required>
+				<td><input class="del_button" type="submit" value="Delete"></td>
+				</form>
 				</tr>
 			{% endfor %}
 

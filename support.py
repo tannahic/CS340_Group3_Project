@@ -46,7 +46,7 @@ def get_clients_table():
 
 
 def get_patients_table():
-    # s
+
     query = "SELECT patient_id, patient_name, species, breed, color, sex, date_of_birth," \
             " CONCAT_WS(' ', first_name, last_name) AS client from patients LEFT JOIN clients" \
             " ON patients.client_id=clients.client_id;"
@@ -184,7 +184,7 @@ def vet_is_foreign_key(vet_id):
 
 def vet_patient_exists(vet_id, patient_id):
     data = (vet_id, patient_id)
-    query = ("SELECT * FROM veterinarians_patients vp  WHERE vp.vet_id = %s AND vp.patient_id = %s;" % data)
+    query = ("SELECT * FROM veterinarians_patients vp WHERE vp.vet_id = %s AND vp.patient_id = %s;" % data)
     cursor = db.execute_query(db_connection=db_connection, query=query)
     result = cursor.rowcount
     cursor.close
