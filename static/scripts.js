@@ -1,0 +1,1 @@
+<script>window.setTimeout("document.getElementById('error_alert').style.display='none';", 4000);</script>

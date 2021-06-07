@@ -173,7 +173,7 @@ def generate_insert_query(table_in, dict_in):
     cursor = db.execute_query(db_connection=db_connection, query=insert_query)
     cursor.close()
 
-def is_vet_in_relation(vet_id):
+def vet_is_foreign_key(vet_id):
     data = (vet_id, vet_id)
     query = ("SELECT a.vet_id, vp.vet_id FROM appointments a JOIN veterinarians_patients vp"
              " WHERE a.vet_id= %s OR vp.vet_id = %s;" % data)

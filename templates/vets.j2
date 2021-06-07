@@ -9,15 +9,15 @@
             <fieldset style="position: relative;">
 		<legend>Veterinarian Information:</legend>
 		<input type="hidden" name="table name"  value="veterinarians" required>		
-                <label>First Name:</label>
+                <label>*First Name:</label>
                     <input type="text" name="vet_first_name" required>
 				<br>
-                <label>Last Name:</label>
+                <label>*Last Name:</label>
 		    <input type="text" name="vet_last_name" required>
-		<label>Phone:</label>
+		<label>*Phone:</label>
                     <input type="tel" name="direct_phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
                     <br> 
-		<label>Specialty:</label>
+		<label>*Specialty:</label>
                     <select  name="specialty" required>
 			<option value="">SELECT</option>
 			<option value="Cardiology">Cardiology</option>
@@ -31,16 +31,16 @@
 			<option value="Orthopedics">Orthopedics</option>
 			<option value="Surgery">Surgery</option>   
 		    </select>		
-		<label>Status:</label>
+		<label>*Status:</label>
                     <select  name="employment_status" required>
 			<option value="">SELECT</option>
 			<option value="staff">Staff</option>
                         <option value="outside consultant">Outside Consultant</option>
 		    </select>						
-                <label>E-mail:</label>
+                <label>*E-mail:</label>
                     <input type="email" name="vet_email" required>
 			<br>
-                <label>*Clinic:</label>
+                <label>Clinic:</label>
                     <select name="clinic_id" >
 						<option value="">SELECT</option>
 						{% for entry in dropdown %}
@@ -48,7 +48,7 @@
 						{% endfor %}
 					</select>
                     
-	    <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div>        
+	    <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates required entry field </em></div>
             </fieldset>
 		<input class= "button" type="submit" value="Add Veterinarian">
         </form>
@@ -82,7 +82,7 @@
 
 
 
-<script>window.setTimeout("document.getElementById('error_alert').style.display='none';", 3000);</script>
+
 
 
 {% endblock %}

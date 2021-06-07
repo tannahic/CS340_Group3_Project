@@ -103,7 +103,7 @@ def update_submit():
 def delete():
     # convert form data to dictionary
     dict1 = request.form.to_dict()
-    if is_vet_in_relation(dict1['vet_id']):
+    if vet_is_foreign_key(dict1['vet_id']):
         error = "Veterinarians associated with Appointments or Veterinarians_Patients cannot be deleted."
         vet_data = get_veterinarians_table()
         dropdown = get_clinic_dropdown()
@@ -161,7 +161,7 @@ def insert():
 @app.route('/search')
 def search_page():
     patients_data = get_patients_table()
-    dropdown = get_client_dropdown
+    dropdown = get_client_dropdown()
     # send data to browser via template
     return render_template("search.j2", patients=patients_data, dropdown=dropdown)
 
@@ -190,7 +190,6 @@ def search_result():
     cursor = db.execute_query(db_connection=db_connection, query=search_query)
     result = cursor.fetchall()
     cursor.close()
-
     dropdown = get_client_dropdown()
     return render_template("search.j2", patients=result, dropdown=dropdown)
 
