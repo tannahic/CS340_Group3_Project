@@ -1,0 +1,70 @@
+{%  extends "base.j2" %}
+{% block title %}Clinics-Update{% endblock %}
+{% block content %}
+
+    <h1>CLINICS</h1>
+        {% for clinic in form_data %}
+         <form action="update_clinics_result" method="post">
+            <fieldset style="position: relative; border-color: #90EE90;">
+		    <legend style="color: #90EE90;">Clinic Update:</legend>
+            <input type="hidden" name="table"  value="clinics" required>
+			<input type="hidden" name="clinic_id"  value={{clinic['clinic_id']}} required>
+             <label>Clinic Name:</label>
+                    <input type="text" name="clinic_name" required value="{{clinic['clinic_name']}}" maxlength="50">
+                <br>		
+                <label>Street Address:</label>
+                    <input type="text" name="clinic_street" required value="{{clinic['clinic_street']}}" maxlength="50">
+                <br>
+		        <label>City:</label>
+                    <input type="text" name="clinic_city" required value="{{clinic['clinic_city']}}" maxlength="50">
+		        <br>
+                <label>State:</label>
+                    <select id="clinic_state" name="clinic_state" required >
+			            <option value="">SELECT</option>
+                        {%  for clinic_state in states %}
+                            {% if  clinic_state  == clinic['clinic_state']  %}
+                                <option value={{ clinic_state }} selected>{{ states[clinic_state] }}</option>
+                            {% else %}
+                                <option value="{{ clinic_state }}" >{{ states[clinic_state] }}</option>
+                            {% endif %}
+                        {% endfor %}
+		            </select>
+                <br>
+		        <label>Zip:</label>
+                    <input type="text" name="clinic_zip" value={{clinic['clinic_zip']}} pattern="[0-9]{5}" required>
+		        <label>Phone:</label>
+		            <input type="tel" name="clinic_phone" value={{clinic['clinic_phone']}} pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div>
+            </fieldset>
+	        <input class= "filter_btn" type="submit" value="Update Clinic">
+        </form>
+        {% endfor %}
+        <br>
+		<h3>Clinics Table</h3>
+		<table>
+            <tr>
+			    <th>id</th>
+	            <th>Name</th>
+	            <th>Street Address</th>
+			    <th>City</th>
+			    <th>State</th>
+			    <th>Zip</th>
+			    <th>Phone</th>
+			    <th  style= "text-align: center;">Action</th>
+	        </tr>
+	        {% for clinic in clinics %}
+			<tr>
+				{% for key in clinic.keys() %}
+				<td>{{clinic[key]}}</td>
+				{% endfor %}
+				<form action="update_clinics" method="post">
+				{% set var = clinic['clinic_id'] %}
+				<input type="hidden" name="table" value="clinics" required>
+				<input type="hidden" name="clinic_id"  value={{ var }} required>
+				<td><input style="width:95%" class="update_button" type="submit" value="Update"></td>
+				</form>
+				</tr>
+            {% endfor %}
+        </table>
+
+{% endblock %}

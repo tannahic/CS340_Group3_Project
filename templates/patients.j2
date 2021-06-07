@@ -12,13 +12,13 @@
                     <input type="text" name="patient_name" required>
 		    <br>
 		<label>Species:</label>
-                    <input type="text" name="species" required>
+                    <input type="text" name="species" maxlength= "50" required>
 		    <br>
                 <label>*Breed:</label>
-                    <input type="text" name="breed">
+                    <input type="text" name="breed" maxlength= "50">
 		    <br>
                 <label>*Color:</label>
-                    <input type="text" name="color">
+                    <input type="text" name="color" maxlength= "20">
                     <br>
                 <label>Sex:</label>
                     <select  name="sex" required>
@@ -67,7 +67,6 @@
 				{% for key in patient.keys() %}
 				<td>{{patient[key]}}</td>
 				{% endfor %}
-				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
 				</tr>
 			{% endfor %}
         </table>

@@ -10,12 +10,12 @@
 		<legend>Veterinarian Information:</legend>
 		<input type="hidden" name="table name"  value="veterinarians" required>		
                 <label>First Name:</label>
-                    <input type="text" name="vet_first_name" required>
+                    <input type="text" name="vet_first_name" maxlength= "50" required>
 				<br>
                 <label>Last Name:</label>
-		    <input type="text" name="vet_last_name" required>
+		    <input type="text" name="vet_last_name" maxlength= "50" required>
 		<label>Phone:</label>
-                    <input type="tel" name="direct_phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+                    <input type="tel" name="direct_phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" maxlength= "12" required>
                     <br> 
 		<label>Specialty:</label>
                     <select  name="specialty" required>
@@ -38,7 +38,7 @@
                         <option value="outside consultant">Outside Consultant</option>
 		    </select>						
                 <label>E-mail:</label>
-                    <input type="email" name="vet_email" required>
+                    <input type="email" name="vet_email" maxlength= "100" required>
 			<br>
                 <label>*Clinic:</label>
                     <select name="clinic_id" >
@@ -71,7 +71,6 @@
 				{% for key in vet.keys() %}
 				<td>{{vet[key]}}</td>
 				{% endfor %}
-				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
 				<form action="delete" method="post">
 				<input type="hidden" name="vet_id"  value={{vet['vet_id']}} required>			
 				<td><input class="del_button" type="submit" value="Delete"></td>
