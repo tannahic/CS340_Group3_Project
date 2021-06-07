@@ -84,6 +84,37 @@ def update_page():
     client_data = get_clients_table()
     return render_template("update.j2", form_data=result, clients=client_data, states=state_dict)
 
+'''
+    ADDED THIS HERE VVV
+'''
+@app.route('/update_clinics', methods=['POST'])
+def update_clinics_page():
+    dict1 = request.form.to_dict()
+    table = dict1['table']
+    id_value = dict1[list(dict1)[1]]
+    id_name = table[:-1] + '_id'
+    data = (table, id_name, id_value)
+    formfill_query = ("SELECT * FROM %s WHERE %s = %s ;" % data)
+    cursor = db.execute_query(db_connection=db_connection, query=formfill_query)
+    result = cursor.fetchall()
+    cursor.close()
+    clinic_data = get_clinics_table()
+    return render_template("update_clinics.j2", form_data=result, clinics=clinic_data, states=state_dict)
+
+@app.route('/update_clinics_result', methods=['POST'])
+def update_clinics_submit():
+    dict1 = request.form.to_dict()
+    table = list(dict1.values())[0]
+    # get first dictionary key
+    table_key = list(dict1.keys())[0]
+    # use key to remove first dictionary entry
+    dict1.pop(table_key)
+    generate_update_query(table, dict1)
+    page = '/' + table
+    return redirect(page)
+'''
+    ADDED THIS HERE ^^^
+'''
 
 @app.route('/update_result', methods=['POST'])
 def update_submit():
@@ -197,6 +228,6 @@ def search_result():
 
 # Start app
 if __name__ == "__main__":
-    # port = int(os.environ.get('PORT', 1994))
-    app.run()
-    # (host='0.0.0.0', port=port, debug=True)
+    port = int(os.environ.get('PORT', 52821))
+    app.run(host='0.0.0.0', port=port, debug=True)
+    #(host='0.0.0.0', port=port, debug=True)
