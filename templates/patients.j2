@@ -8,19 +8,19 @@
             <fieldset style="position: relative;">
 		<legend>Patient Information:</legend>
 		<input type="hidden" name="table name"  value="patients" required>		
-                <label>Name:</label>
+                <label>*Name:</label>
                     <input type="text" name="patient_name" required>
 		    <br>
-		<label>Species:</label>
+		<label>*Species:</label>
                     <input type="text" name="species" required>
 		    <br>
-                <label>*Breed:</label>
+                <label>Breed:</label>
                     <input type="text" name="breed">
 		    <br>
-                <label>*Color:</label>
+                <label>Color:</label>
                     <input type="text" name="color">
                     <br>
-                <label>Sex:</label>
+                <label>*Sex:</label>
                     <select  name="sex" required>
 			<option value="">SELECT</option>
                         <option value="intact male">intact male</option>
@@ -30,9 +30,9 @@
                         <option value="unknown">unknown</option>
                	    </select>
 		    <br>            
-		<label>*Date of Birth:</label>
+		<label>Date of Birth:</label>
                     <input type="date" name="date_of_birth" >
-		<label>Client:</label>
+		<label>*Client:</label>
 			<select name="client_id" required>
 				<option value="">SELECT</option>
 				{% for entry in dropdown %}
@@ -40,7 +40,7 @@
 				{% endfor %}
 			</select>
                     
-	    	<div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div> 
+	    	<div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates required entry field </em></div>
         				    
             </fieldset>
 	    
@@ -60,14 +60,14 @@
 			<th>Sex</th>
 			<th>Date of Birth</th>
 			<th>Client</th>
-			<th style= "text-align: center;">Action</th>
+
 	      </tr>
 	      {% for patient in patients %}
 				<tr>
 				{% for key in patient.keys() %}
 				<td>{{patient[key]}}</td>
 				{% endfor %}
-				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+
 				</tr>
 			{% endfor %}
         </table>

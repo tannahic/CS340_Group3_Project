@@ -5,17 +5,17 @@
     <h1>APPOINTMENTS</h1>
          
         <form action="insert" method="post">
-		<fieldset>
+		<fieldset style="position:relative">
 			<legend>Appointment Information:</legend>
 				<input type="hidden" name="table name"  value="appointments" required>
-			<label>Patient:</label>
+			<label>*Patient:</label>
 			<select name="patient_id" required>
 				<option value="">SELECT</option>
 				{% for entry in dropdown1 %}
 				<option value={{entry['patient_id']}}>{{entry['patient_id']}}  {{entry['patient']}}</option>
 				{% endfor %}
 			</select>               
-			<label>Vet:</label>
+			<label>*Vet:</label>
 			<select name="vet_id" required>
 				<option value="">SELECT</option>
 				{% for entry in dropdown2 %}
@@ -23,22 +23,22 @@
 				{% endfor %}
 			</select>          
                     		
-                	<label>Appointment Type:</label>
+                	<label>*Appointment Type:</label>
                     		<select  name="appointment_type" required>
 					<option value="">SELECT</option>
                         		<option value="regular">Regular</option>
                         		<option value="consultation">Consultation</option>
                     		</select>
 				<br>
-		        <label>Date:</label>
+		        <label>*Date:</label>
                     		<input type="date" name="appointment_date" required>
                 	<br>
-                	<label>Start Time:</label>
+                	<label>*Start Time:</label>
                     		<input type="time" name="start_time" required>
                 	<br>
-			<label>End Time:</label>
+			<label>*End Time:</label>
                     		<input type="time" name="end_time" required>
-
+                <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates required entry field </em></div>
             	</fieldset>
 		<input class= "button" type="submit" value="Add Appointment">
 			
@@ -56,14 +56,14 @@
 				<th>Date</th>
 				<th>Start Time</th>
 				<th>End Time</th>
-				<th style= "text-align: center;">Action</th>
+
 			</tr>
 			{% for appt in appointments %}
 				<tr>
 					{% for key in appt.keys() %}
 					<td>{{appt[key]}}</td>
 					{% endfor %}
-					<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+
 				</tr>
 			{% endfor %}
 		  

@@ -8,19 +8,19 @@
             <fieldset style="position:relative">
 		<legend>Client Information:</legend>
 			<input type="hidden" name="table name"  value="clients" required>		
-                <label>First Name:</label>
+                <label>*First Name:</label>
                     <input type="text" name="first_name" required>
 		<br>
-		<label>Last Name:</label>
+		<label>*Last Name:</label>
                     <input type="text" name="last_name" required>
 		<br>
-                <label>Street Address:</label>
+                <label>*Street Address:</label>
                     <input type="text" name="street" required>
 		<br>
-                <label>City:</label>
+                <label>*City:</label>
                     <input type="text" name="city" required>
                <br>
-                <label>State:</label>
+                <label>*State:</label>
                     <select id="state" name="state" required >
 			            <option value="">SELECT</option>
                         {%  for state in states %}
@@ -28,13 +28,13 @@
                         {% endfor %}
 		            </select>
 				 <br>            
-		<label>Zip:</label>
+		<label>*Zip:</label>
                     <input type="text" name="zip" pattern="[0-9]{5}" required>
-		<label>Phone:</label>
+		<label>*Phone:</label>
 		    <input type="tel" name="phone" placeholder="555-555-5555" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
-		<label>*E-mail:</label>
+		<label>E-mail:</label>
 		    <input type="email" name="email">
-               <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates optional entry field </em></div> 
+               <div style="position: absolute; bottom: 0; right: 0; padding: 8px;"><em>* indicates required entry field </em></div>
             </fieldset>
 	    <input class= "button" type="submit" value="Add Client">
         </form>
