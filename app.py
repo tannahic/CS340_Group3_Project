@@ -209,7 +209,13 @@ def update_clinics_page():
     clinic_data = get_clinics_table()
     return render_template("update_clinics.j2", form_data=result, clinics=clinic_data, states=state_dict)
 
-
+"""
+# Start app
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', ))
+    app.run(host='0.0.0.0', port=port, debug=True)
+    # (host='0.0.0.0', port=port, debug=True)
+"""
 # Start app
 if __name__ == "__main__":
     # port = int(os.environ.get('PORT', 1994))
