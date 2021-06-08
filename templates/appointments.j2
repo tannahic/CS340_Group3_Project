@@ -56,14 +56,14 @@
 				<th>Date</th>
 				<th>Start Time</th>
 				<th>End Time</th>
-				<th style= "text-align: center;">Action</th>
+
 			</tr>
 			{% for appt in appointments %}
 				<tr>
 					{% for key in appt.keys() %}
 					<td>{{appt[key]}}</td>
 					{% endfor %}
-					<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+
 				</tr>
 			{% endfor %}
 		  

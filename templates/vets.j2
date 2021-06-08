@@ -64,14 +64,14 @@
 				<th>Status</th>
 				<th>E-mail</th>
 				<th>Clinic</th>
-				<th colspan = 2 style= "text-align: center;">Action</th>
+				<th  style= "text-align: center;">Action</th>
 			</tr>
 			{% for vet in vets %}
 				<tr>
 				{% for key in vet.keys() %}
 				<td>{{vet[key]}}</td>
 				{% endfor %}
-				<td><button class= "update_button" type="button" onclick="alert('This will (eventually) allow update')">Update</button></td>
+
 				<form action="delete" method="post">
                     <input type="hidden" name="table"  value="veterinarians" required>
 				    <input type="hidden" name="id"  value={{vet['vet_id']}} required>

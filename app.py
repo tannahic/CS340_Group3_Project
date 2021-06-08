@@ -195,6 +195,21 @@ def search_result():
     return render_template("search.j2", patients=result, dropdown=dropdown, id='FocusOnSearchResult()')
 
 
+@app.route('/update_clinics', methods=['POST'])
+def update_clinics_page():
+    dict1 = request.form.to_dict()
+    table = dict1['table']
+    id_value = dict1[list(dict1)[1]]
+    id_name = table[:-1] + '_id'
+    data = (table, id_name, id_value)
+    formfill_query = ("SELECT * FROM %s WHERE %s = %s ;" % data)
+    cursor = db.execute_query(db_connection=db_connection, query=formfill_query)
+    result = cursor.fetchall()
+    cursor.close()
+    clinic_data = get_clinics_table()
+    return render_template("update_clinics.j2", form_data=result, clinics=clinic_data, states=state_dict)
+
+
 # Start app
 if __name__ == "__main__":
     # port = int(os.environ.get('PORT', 1994))
